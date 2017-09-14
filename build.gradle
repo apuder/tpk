@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'org.puder.tpk.Main'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'commons-configuration:commons-configuration:1.10'
+    compile 'org.json:json:20170516'
+    compile 'net.iharder:base64:2.3.8'
+    compile 'commons-io:commons-io:2.4'
+    compile 'org.slf4j:slf4j-api:1.7.13'
+    testCompile 'junit:junit:3.8.2'
+}
