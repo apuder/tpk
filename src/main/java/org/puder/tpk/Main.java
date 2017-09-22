@@ -88,14 +88,7 @@ public class Main {
         }
 
         String getProperty(String property) {
-            StringBuilder value = new StringBuilder();
-            for (String v : this.config.getStringArray(property)) {
-                if (value.length() != 0) {
-                    value.append(" ");
-                }
-                value.append(v);
-            }
-            return value.toString();
+            return String.join(" ", this.config.getStringArray(property));
         }
 
         private RpkData.MediaImage[] getMediaImages(String property) {
