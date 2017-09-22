@@ -18,10 +18,6 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws ConfigurationException, IOException, URISyntaxException {
-        iterateApps();
-    }
-
-    private static void iterateApps() throws IOException, URISyntaxException, ConfigurationException {
         Enumeration<URL> apps = ClassLoader.getSystemClassLoader().getResources(Config.APPS_FOLDER);
         File appsFolder = new File(apps.nextElement().toURI());
         File[] files = appsFolder.listFiles();
