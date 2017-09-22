@@ -17,19 +17,18 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {
-        try {
-            iterateApps();
-        } catch (IOException | URISyntaxException | ConfigurationException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws ConfigurationException, IOException, URISyntaxException {
+        iterateApps();
     }
 
     private static void iterateApps() throws IOException, URISyntaxException, ConfigurationException {
         Enumeration<URL> apps = ClassLoader.getSystemClassLoader().getResources(Config.APPS_FOLDER);
         File appsFolder = new File(apps.nextElement().toURI());
-        for (File appFolder : appsFolder.listFiles()) {
-            convertToJSON(appFolder);
+        File[] files = appsFolder.listFiles();
+        if (files != null) {
+            for (File appFolder : files) {
+                convertToJSON(appFolder);
+            }
         }
     }
 
@@ -56,11 +55,11 @@ public class Main {
     }
 
     private static void saveJSON(File appFolder, String json) throws IOException {
-        String appName = FilenameUtils.getBaseName(appFolder.getCanonicalPath());
         File dir = new File(Config.OUTPUT_FOLDER);
         if (!dir.exists() && !dir.mkdirs()) {
             throw new RuntimeException("Cannot create output directory: " + dir);
         }
+        String appName = FilenameUtils.getBaseName(appFolder.getCanonicalPath());
         try (FileWriter out = new FileWriter(new File(dir, appName + ".json"))) {
             out.write(json);
         }
@@ -92,25 +91,22 @@ public class Main {
         }
 
         private RpkData.MediaImage[] getMediaImages(String property) {
-            String[] propertyValues = config.getStringArray(property);
             List<RpkData.MediaImage> images = new ArrayList<>();
-            for (String v : propertyValues) {
-                images.add(createMediaImage(new File(baseDir, v)));
+            for (String filename : config.getStringArray(property)) {
+                images.add(createMediaImage(new File(baseDir, filename)));
             }
             return images.toArray(new RpkData.MediaImage[0]);
         }
 
         private static RpkData.MediaImage createMediaImage(File path) {
-            RpkData.MediaImage mediaImage = new RpkData.MediaImage();
-            try {
-                InputStream is = new FileInputStream(path);
-                byte[] data = IOUtils.toByteArray(is);
+            try (InputStream is = new FileInputStream(path)){
+                RpkData.MediaImage mediaImage = new RpkData.MediaImage();
+                mediaImage.content = Base64.encodeBytes(IOUtils.toByteArray(is));
                 mediaImage.ext = FilenameUtils.getExtension(path.getName());
-                mediaImage.content = Base64.encodeBytes(data);
+                return mediaImage;
             } catch (IOException e) {
                 throw new RuntimeException("Cannot create MediaImage!", e);
             }
-            return mediaImage;
         }
     }
 }
