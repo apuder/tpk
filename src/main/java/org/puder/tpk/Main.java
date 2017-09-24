@@ -2,7 +2,6 @@ package org.puder.tpk;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.iharder.Base64;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.FilenameUtils;
@@ -12,6 +11,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -98,7 +98,7 @@ public class Main {
         private static RpkData.MediaImage createMediaImage(File path) {
             try (InputStream is = new FileInputStream(path)){
                 RpkData.MediaImage mediaImage = new RpkData.MediaImage();
-                mediaImage.content = Base64.encodeBytes(IOUtils.toByteArray(is));
+                mediaImage.content = Base64.getEncoder().encodeToString(IOUtils.toByteArray(is));
                 mediaImage.ext = FilenameUtils.getExtension(path.getName());
                 return mediaImage;
             } catch (IOException e) {
