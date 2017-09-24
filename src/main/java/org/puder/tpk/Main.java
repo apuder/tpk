@@ -41,8 +41,9 @@ public class Main {
         rpkData.app.categories = info.getProperty("app.categories");
         rpkData.app.platform = info.getProperty("app.platform");
         rpkData.app.screenshot = info.getMediaImages("app.screenshot");
-        rpkData.submitter.name = info.getProperty("submitter.name");
-        rpkData.submitter.email = info.getProperty("submitter.email");
+        rpkData.publisher.first_name = info.getProperty("publisher.first_name");
+        rpkData.publisher.last_name = info.getProperty("publisher.last_name");
+        rpkData.publisher.email = info.getProperty("publisher.email");
         rpkData.trs.model = info.getProperty("trs.model");
         rpkData.trs.image.disk = info.getMediaImages("trs.image.disk");
         rpkData.trs.image.cmd = info.getMediaImages("trs.image.cmd")[0];

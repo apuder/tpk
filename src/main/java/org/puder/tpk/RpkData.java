@@ -22,10 +22,10 @@ package org.puder.tpk;
  */
 public class RpkData {
     public AppData app = new AppData();
-    public Submitter submitter = new Submitter();
+    public Publisher publisher = new Publisher();
     public TrsExtension trs = new TrsExtension();
 
-    static class AppData {
+    public static class AppData {
         public String id;
         public String version;
         public String name;
@@ -37,23 +37,25 @@ public class RpkData {
         public MediaImage[] screenshot = new MediaImage[0];
     }
 
-    static class Submitter {
-        public String name;
+    public static class Publisher {
+        public String first_name;
+        public String last_name;
         public String email;
     }
 
-    static class TrsExtension {
+    public static class TrsExtension {
         public String model;
         public Image image = new Image();
     }
 
-    static class Image {
+    public static class Image {
         public MediaImage[] disk = new MediaImage[0];
         public MediaImage cmd = new MediaImage();
     }
 
-    static class MediaImage {
+    public static class MediaImage {
         public String ext;
         public String content;
     }
 }
+
