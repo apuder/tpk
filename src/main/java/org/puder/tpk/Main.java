@@ -46,7 +46,9 @@ public class Main {
         rpkData.publisher.email = info.getProperty("publisher.email");
         rpkData.trs.model = info.getProperty("trs.model");
         rpkData.trs.image.disk = info.getMediaImages("trs.image.disk");
-        rpkData.trs.image.cmd = info.getMediaImages("trs.image.cmd")[0];
+        if (info.hasProperty("trs.image.cmd")) {
+            rpkData.trs.image.cmd = info.getMediaImages("trs.image.cmd")[0];
+        }
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         saveJSON(appFolder, gson.toJson(rpkData));
     }
@@ -81,6 +83,10 @@ public class Main {
         private PropertyWrapper(PropertiesConfiguration config, File baseDir) {
             this.config = config;
             this.baseDir = baseDir;
+        }
+
+        boolean hasProperty(String property) {
+            return this.config.getProperty(property) != null;
         }
 
         String getProperty(String property) {
