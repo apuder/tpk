@@ -76,6 +76,7 @@ public class Main {
             PropertiesConfiguration config = new PropertiesConfiguration();
             config.setDelimiterParsingDisabled(true);
             config.setFile(propertyFile);
+            config.setEncoding("UTF-8");
             config.load();
             return new PropertyWrapper(config, baseDir);
         }
