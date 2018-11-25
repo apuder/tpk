@@ -49,6 +49,9 @@ public class Main {
         if (info.hasProperty("trs.image.cmd")) {
             rpkData.trs.image.cmd = info.getMediaImages("trs.image.cmd")[0];
         }
+        if (info.hasProperty("trs.image.bas")) {
+            rpkData.trs.image.bas = info.getMediaImages("trs.image.bas")[0];
+        }
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         saveJSON(appFolder, gson.toJson(rpkData));
     }

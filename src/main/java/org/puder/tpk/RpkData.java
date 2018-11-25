@@ -51,6 +51,7 @@ public class RpkData {
     public static class Image {
         public MediaImage[] disk = new MediaImage[0];
         public MediaImage cmd = new MediaImage();
+        public MediaImage bas = new MediaImage();
     }
 
     public static class MediaImage {
